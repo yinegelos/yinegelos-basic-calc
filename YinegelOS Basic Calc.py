@@ -19,27 +19,37 @@ ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
 
 def calculate(raw_number1, raw_number2, operator):
-    number1 = int(raw_number1)
-    number2 = int(raw_number2)
-    if operator == "+" :
-        result = number1 + number2
-    elif operator == "-" :
-        result = number1 - number2
-    elif operator == "x" :
-        result = number1 * number2
-    elif operator == "/" :
-        if number2 == 0:
-            lbl_result.configure(text="Bölme işleminde bölen 0 olamaz.")
-        else:
-            result = number1 / number2
-    lbl_result.configure(text=f"{number1} {operator} {number2} = {result}")
+    try:
+        number1 = int(raw_number1)
+        number2 = int(raw_number2)
+        if operator == "+" :
+           result = number1 + number2
+        elif operator == "-" :
+            result = number1 - number2
+        elif operator == "x" :
+            result = number1 * number2
+        elif operator == "/" :
+            if number2 == 0:
+                lbl_result.configure(text="Bölme işleminde bölen 0 olamaz.")
+            else:
+                result = number1 / number2
+        lbl_result.configure(text=f"{number1} {operator} {number2} = {result}")
+    except ValueError:
+        lbl_result.configure(text="Lütfen sadece sayı girin.")
+    
 
 def logout():
     root.destroy()
 
 root = ctk.CTk()
 root.title("YinegelOS Basic Calc")
-root.geometry("500x550")
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+window_width = int(screen_width * 0.6)
+window_height = int(screen_height * 0.6)
+x = int((screen_width / 2) - (window_width / 2))
+y = int((screen_height / 2) - (window_height / 2))
+root.geometry(f"{window_width}x{window_height}+{x}+{y}")
 frm1 = ctk.CTkFrame(root)
 frm1.pack(pady=10, padx=20)
 ent1 = ctk.CTkEntry(frm1, font=("Arial", 16))
@@ -58,6 +68,6 @@ btn_divide = ctk.CTkButton(frm2,  text="Böl",  font=("Arial", 16), command=lamb
 btn_divide.pack(pady=10, padx=20, side="left")
 lbl_result = ctk.CTkLabel(root, text="", font=("Arial", 16))
 lbl_result.pack(pady=10, padx=20)
-btn_exit = ctk.CTkButton(root, text="Çıkış yap", command=exit, font=("Arial", 16))
-btn_exit.pack(pady=10, padx=20)
+btn_exit = ctk.CTkButton(root, text="Çıkış yap", command=logout, font=("Arial", 16))
+btn_exit.pack(pady=30, padx=40, side="bottom")
 root.mainloop()

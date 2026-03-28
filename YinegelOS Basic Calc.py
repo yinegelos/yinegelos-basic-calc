@@ -20,8 +20,8 @@ ctk.set_default_color_theme("blue")
 
 def calculate(raw_number1, raw_number2, operator):
     try:
-        number1 = int(raw_number1)
-        number2 = int(raw_number2)
+        number1 = float(raw_number1)
+        number2 = float(raw_number2)
         if operator == "+" :
            result = number1 + number2
         elif operator == "-" :
